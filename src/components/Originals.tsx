@@ -6,7 +6,7 @@ import { EASE, RevealText } from './fx';
 import ProjectCard from './ProjectCard';
 
 /**
- * ORIGINALS — on desktop the section pins and scrolls sideways like a title sequence.
+ * ORIGINALS — on desktop the section pins and scrolls sideways like a streaming title showcase.
  * On touch / small screens / reduced motion it becomes a native swipe rail.
  */
 export default function Originals({ onOpen }: { onOpen: (p: Project) => void }) {
@@ -19,13 +19,17 @@ function Intro() {
   return (
     <div className="flex w-full shrink-0 flex-col justify-center lg:w-[34vw]">
       <p className="mb-3 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-crimson-2">
-        <span className="h-px w-8 bg-crimson-2" /> {projects.length} Originals · {projects[0].year}
+        <span className="h-px w-8 bg-crimson-2" /> {projects.length} Verified Projects · 2024
       </p>
-      <RevealText as="h2" text="ORIGINALS" className="font-display text-[clamp(3.5rem,9vw,8rem)] leading-[0.85] text-bone" />
-      <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-mist">
-        Three productions from the resume — an AI platform, a payment gateway and a multi-tenant SaaS. Open any title for the full story.
+      <div style={{ color: 'var(--text-primary)' }}>
+        <RevealText as="h2" text="ORIGINALS" className="font-display text-[clamp(3.5rem,9vw,8rem)] leading-[0.85]" />
+      </div>
+      <p className="mt-4 max-w-sm text-[15px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+        Practical web applications built with modern full-stack architectures — HomelyHub, KrushiConnect, FreshCart, and an educational Trading Dashboard.
       </p>
-      <p className="mt-6 hidden text-xs tracking-[0.24em] text-smoke lg:block">SCROLL TO BROWSE →</p>
+      <p className="mt-6 hidden text-xs tracking-[0.24em] lg:block" style={{ color: 'var(--text-muted)' }}>
+        SCROLL TO BROWSE →
+      </p>
     </div>
   );
 }
@@ -37,11 +41,17 @@ function Outro() {
       target="_blank"
       rel="noreferrer"
       data-cursor="link"
-      className="group flex aspect-[3/4] w-[70vw] shrink-0 snap-start flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-white/15 text-center transition hover:border-crimson-2/60 sm:w-[44vw] lg:aspect-auto lg:h-[66vh] lg:w-[24vw]"
+      className="group flex aspect-[3/4] w-[70vw] shrink-0 snap-start flex-col items-center justify-center gap-4 rounded-2xl border border-dashed transition hover:border-crimson-2 sm:w-[44vw] lg:aspect-auto lg:h-[66vh] lg:w-[24vw]"
+      style={{
+        borderColor: 'var(--border-color-strong)',
+        background: 'var(--bg-card)',
+      }}
     >
-      <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/25 text-2xl text-bone transition group-hover:scale-110 group-hover:border-crimson-2 group-hover:text-crimson-2">↗</span>
-      <span className="font-display text-3xl tracking-wide text-bone">More on GitHub</span>
-      <span className="text-xs text-mist">github.com/Sushmitadasari</span>
+      <span className="flex h-16 w-16 items-center justify-center rounded-full border text-2xl transition group-hover:scale-110 group-hover:border-crimson-2 group-hover:text-crimson-2" style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
+        ↗
+      </span>
+      <span className="font-display text-3xl tracking-wide" style={{ color: 'var(--text-primary)' }}>More on GitHub</span>
+      <span className="text-xs" style={{ color: 'var(--text-muted)' }}>github.com/SKendre11</span>
     </a>
   );
 }
@@ -86,8 +96,8 @@ function PinnedOriginals({ onOpen }: { onOpen: (p: Project) => void }) {
           <Outro />
         </motion.div>
         <div className="gutter absolute inset-x-0 bottom-8 flex items-center gap-4">
-          <span className="text-[10px] font-bold tracking-[0.3em] text-smoke">ORIGINALS</span>
-          <div className="h-[2px] flex-1 overflow-hidden rounded bg-white/10">
+          <span className="text-[10px] font-bold tracking-[0.3em]" style={{ color: 'var(--text-muted)' }}>ORIGINALS</span>
+          <div className="h-[2px] flex-1 overflow-hidden rounded bg-black/10 dark:bg-white/10">
             <motion.div className="h-full origin-left bg-crimson" style={{ scaleX: bar }} />
           </div>
         </div>

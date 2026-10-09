@@ -88,19 +88,34 @@ export function ProjectArt({ project, className = '' }: { project: Project; clas
             <path d="M188 228 h190" strokeWidth="1" strokeOpacity="0.2" />
           </g>
         )}
+        {project.motif === 'cart' && (
+          <g fill="none" stroke={a}>
+            {/* Cart body */}
+            <path d="M200 80 l20 0 l15 70 l100 0 l16 -50 l-120 0" strokeWidth="3" strokeOpacity="0.85" strokeLinecap="round" strokeLinejoin="round" />
+            {/* Cart handle */}
+            <path d="M200 80 l-20 0" strokeWidth="3" strokeOpacity="0.5" strokeLinecap="round" />
+            {/* Wheels */}
+            <circle cx="235" cy="162" r="8" strokeWidth="2.5" strokeOpacity="0.8" />
+            <circle cx="318" cy="162" r="8" strokeWidth="2.5" strokeOpacity="0.8" />
+            {/* Items in cart */}
+            {[0, 1, 2].map((i) => (
+              <rect key={i} x={230 + i * 36} y={120} width="28" height="28" rx="5" strokeWidth="1.5" strokeOpacity={0.4 + i * 0.15} fill={a} fillOpacity="0.18" />
+            ))}
+          </g>
+        )}
       </svg>
     </PosterBackdrop>
   );
 }
 
 /** Small fictional platform mark used in the nav and on cards. */
-export function SeriesMark({ className = '' }: { className?: string }) {
+export function SeriesMark({ className = '', isDark = true }: { className?: string; isDark?: boolean }) {
   return (
     <span className={`inline-flex items-center gap-1.5 ${className}`}>
       <svg viewBox="0 0 24 32" className="h-[1.1em] w-auto" aria-hidden>
         <path d="M18 6c-1.8-1.8-4-2.6-6.5-2.6C7.6 3.4 5 5.6 5 9c0 7.6 14 4.6 14 11.6 0 3-2.8 5-6.4 5-3 0-5.4-1.2-7.2-3" fill="none" stroke="#e5132b" strokeWidth="4" strokeLinecap="round" />
       </svg>
-      <span className="font-sans text-[0.62em] font-bold tracking-[0.36em] text-mist">SERIES</span>
+      <span className={`font-sans text-[0.62em] font-bold tracking-[0.36em] ${isDark ? 'text-mist' : 'text-[#6d6c75]'}`}>SERIES</span>
     </span>
   );
 }

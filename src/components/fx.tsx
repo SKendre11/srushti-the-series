@@ -119,7 +119,9 @@ export function SectionHeading({ kicker, title, aside }: { kicker: string; title
           <span className="h-px w-8 bg-crimson-2" />
           {kicker}
         </motion.div>
-        <RevealText as="h2" text={title} className="font-display text-[clamp(2.4rem,6vw,5rem)] leading-[0.9] tracking-wide text-bone" />
+        <div style={{ color: 'var(--text-primary)' }}>
+          <RevealText as="h2" text={title} className="font-display text-[clamp(2.4rem,6vw,5rem)] leading-[0.9] tracking-wide" />
+        </div>
       </div>
       {aside}
     </div>

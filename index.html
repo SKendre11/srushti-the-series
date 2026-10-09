@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Sushmita — The Series</title>
-    <meta name="description" content="Sushmita Dasari — Full-Stack Developer and B.Tech AI & ML student. A cinematic, streaming-inspired portfolio." />
+    <title>Srushti — The Series</title>
+    <meta name="description" content="Srushti Kendre — Computer Science Engineering Student &amp; Aspiring Full-Stack Developer. A cinematic, streaming-inspired portfolio." />
     <meta name="theme-color" content="#07070a" />
-    <meta property="og:title" content="Sushmita — The Series" />
-    <meta property="og:description" content="Full-Stack Developer • AI / ML • Java. Every project is an Original." />
+    <meta property="og:title" content="Srushti — The Series" />
+    <meta property="og:description" content="CSE Student • Aspiring Full-Stack Developer. Every project has a story. This is mine." />
     <meta property="og:image" content="/assets/og-image.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -15,10 +15,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="preload" as="image" href="/assets/portrait-720.webp" type="image/webp" />
+    <script>
+      // Restore saved theme on first paint to avoid flashing
+      (function () {
+        try {
+          var t = localStorage.getItem('srushti-theme');
+          // Default to light mode on first visit
+          if (t === 'dark') {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <noscript>Sushmita Dasari — Full-Stack Developer. Please enable JavaScript to watch the series.</noscript>
+    <noscript>Srushti Kendre — CSE Student &amp; Aspiring Full-Stack Developer. Please enable JavaScript to watch the series.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

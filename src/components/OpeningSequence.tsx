@@ -6,15 +6,15 @@ import { EASE, Magnetic } from './fx';
 
 /**
  * The signature moment:
- * black → studio card → SUSHMITA → THE SERIES → portrait reveal → role → ▶ PLAY
+ * black → studio card → SRUSHTI → THE SERIES → subtitle → portrait reveal → role → ▶ PLAY
  */
 const TIMELINE = [
   { at: 300, beat: 1 }, // studio card
-  { at: 1900, beat: 2 }, // name
-  { at: 2700, beat: 3 }, // THE SERIES
-  { at: 3400, beat: 4 }, // portrait
-  { at: 4300, beat: 5 }, // role
-  { at: 5000, beat: 6 }, // play button
+  { at: 1800, beat: 2 }, // name
+  { at: 2600, beat: 3 }, // THE SERIES & subtitle
+  { at: 3300, beat: 4 }, // portrait
+  { at: 4200, beat: 5 }, // role
+  { at: 4900, beat: 6 }, // play button
 ];
 
 export default function OpeningSequence({ onDone }: { onDone: () => void }) {
@@ -93,7 +93,6 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
           sizes="(max-width: 768px) 100vw, 900px"
           alt={profile.portrait.alt}
           className="h-full w-auto max-w-none object-contain object-bottom [mask-image:linear-gradient(to_bottom,black_55%,transparent_98%)]"
-
         />
       </motion.div>
       <div aria-hidden className="absolute inset-0 z-[1] bg-[radial-gradient(70%_60%_at_50%_40%,transparent_30%,rgba(0,0,0,0.85)_100%)]" />
@@ -104,7 +103,7 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
           className="font-display leading-[0.82] text-bone drop-shadow-[0_8px_40px_rgba(0,0,0,0.8)]"
           style={{ fontSize: 'clamp(4.6rem, 20vw, 15rem)' }}
           initial={{ opacity: 0, scale: 1.3, filter: 'blur(20px)', letterSpacing: '0.5em' }}
-          animate={beat >= 2 ? { opacity: 1, scale: 1, filter: 'blur(0px)', letterSpacing: '0.04em', y: beat >= 4 ? '-30vh' : 0 } : {}}
+          animate={beat >= 2 ? { opacity: 1, scale: 1, filter: 'blur(0px)', letterSpacing: '0.04em', y: beat >= 4 ? '-28vh' : 0 } : {}}
           transition={{ duration: 1.3, ease: EASE }}
         >
           {profile.firstName}
@@ -112,22 +111,30 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
         <motion.p
           className="font-sans text-sm font-bold text-crimson-2 [text-shadow:0_2px_20px_rgba(0,0,0,0.9)] sm:text-lg"
           initial={{ opacity: 0, letterSpacing: '1.4em' }}
-          animate={beat >= 3 ? { opacity: 1, letterSpacing: '0.7em', y: beat >= 4 ? '-30vh' : 0 } : {}}
+          animate={beat >= 3 ? { opacity: 1, letterSpacing: '0.7em', y: beat >= 4 ? '-28vh' : 0 } : {}}
           transition={{ duration: 1.1, ease: EASE }}
         >
           {profile.seriesTag}
         </motion.p>
+        <motion.p
+          className="mt-3 font-sans text-xs sm:text-sm font-medium text-bone/90 tracking-wide max-w-lg"
+          initial={{ opacity: 0, y: 10 }}
+          animate={beat >= 3 ? { opacity: 1, y: beat >= 4 ? '-28vh' : 0 } : {}}
+          transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
+        >
+          A journey in code, creativity, and continuous learning.
+        </motion.p>
       </div>
 
       {/* role + play */}
-      <div className="absolute inset-x-0 bottom-[9vh] z-20 flex flex-col items-center gap-6 px-4 text-center">
+      <div className="absolute inset-x-0 bottom-[9vh] z-20 flex flex-col items-center gap-5 px-4 text-center">
         <motion.p
           className="font-sans text-[10px] font-semibold uppercase tracking-[0.22em] text-bone/90 sm:text-sm sm:tracking-[0.4em]"
           initial={{ opacity: 0, y: 14 }}
           animate={beat >= 5 ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE }}
         >
-          {profile.tagline.join('  •  ')}
+          {profile.headline}
         </motion.p>
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={beat >= 6 ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 0.7, ease: EASE }}>
           <Magnetic>

@@ -8,7 +8,7 @@ import { EASE, RevealText } from './fx';
 import { PosterBackdrop } from './Poster';
 import { RailButtons } from './Rail';
 
-const GLYPHS: Record<SectionId, string> = { about: 'S', journey: 'S01', originals: '3', picks: '10', skills: '{ }', moments: '★', story: 'CV' };
+const GLYPHS: Record<SectionId, string> = { about: 'S', journey: 'S01', originals: '3', picks: '10', skills: '{ }', story: 'CV' };
 
 export default function ContinueWatching({ order }: { order: SectionId[] }) {
   const progress = useWatchProgress();
@@ -18,13 +18,17 @@ export default function ContinueWatching({ order }: { order: SectionId[] }) {
   const rail = useRef<HTMLDivElement>(null);
 
   return (
-    <section aria-labelledby="continue-title" className="relative z-10 -mt-10 pb-10 sm:-mt-16">
+    <section aria-labelledby="continue-title" className="relative z-10 -mt-8 pb-10 sm:-mt-14">
       <div className="gutter mb-4 flex items-end justify-between">
-        <RevealText as="h2" text="Continue Exploring" className="font-sans text-lg font-semibold tracking-tight text-bone sm:text-2xl" />
-        <span className="hidden text-xs text-smoke sm:block">Progress shows what you&apos;ve watched so far</span>
+        <div style={{ color: 'var(--text-primary)' }}>
+          <RevealText as="h2" text="Continue Watching" className="font-sans text-lg font-semibold tracking-tight sm:text-2xl" />
+        </div>
+        <span className="hidden text-xs sm:block" style={{ color: 'var(--text-muted)' }}>
+          Explore episodes &amp; milestones in progress
+        </span>
       </div>
       <div className="group/rail relative">
-        <div ref={rail} className="rail gutter flex snap-x snap-mandatory gap-3 overflow-x-auto py-8 sm:gap-4" data-cursor={fine ? undefined : 'drag'}>
+        <div ref={rail} className="rail gutter flex snap-x snap-mandatory gap-3 overflow-x-auto py-6 sm:gap-4" data-cursor={fine ? undefined : 'drag'}>
           {order.map((id, i) => {
             const meta = sectionMeta[id];
             const p = progress[id] ?? 0;
@@ -46,10 +50,10 @@ export default function ContinueWatching({ order }: { order: SectionId[] }) {
                 animate={{ x: shift, scale: fine && hovered === i ? 1.08 : 1, zIndex: hovered === i ? 10 : 1 }}
                 transition={{ duration: 0.5, ease: EASE, delay: 0 }}
               >
-                <div className="relative h-full w-full overflow-hidden rounded-lg ring-1 ring-white/10 transition duration-500 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,61,90,0.6)]">
+                <div className="relative h-full w-full overflow-hidden rounded-xl ring-1 ring-white/10 transition duration-500 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,61,90,0.6)]">
                   <motion.div className="absolute inset-0" animate={{ scale: hovered === i ? 1.12 : 1 }} transition={{ duration: 0.8, ease: EASE }}>
                     <PosterBackdrop palette={meta.palette}>
-                      <span className="absolute -right-2 -top-6 font-display text-[8rem] leading-none text-white/[0.07] sm:text-[9rem]">{GLYPHS[id]}</span>
+                      <span className="absolute -right-2 -top-6 font-display text-[8rem] leading-none text-white/[0.09] sm:text-[9rem]">{GLYPHS[id]}</span>
                     </PosterBackdrop>
                   </motion.div>
                   <div className="absolute inset-0 flex flex-col justify-end p-4">
@@ -65,7 +69,7 @@ export default function ContinueWatching({ order }: { order: SectionId[] }) {
                     ▶
                   </span>
                 </div>
-                <div className="mt-2 h-[3px] w-full overflow-hidden rounded bg-white/15">
+                <div className="mt-2 h-[3px] w-full overflow-hidden rounded bg-black/10 dark:bg-white/15">
                   <motion.div className="h-full origin-left bg-crimson" animate={{ scaleX: Math.max(0.04, p) }} transition={{ duration: 0.6 }} />
                 </div>
               </motion.button>

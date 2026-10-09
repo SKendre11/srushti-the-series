@@ -43,7 +43,7 @@ export default function ProjectModal({ project, onClose, onSwitch }: { project: 
       />
       <div ref={scroller} data-lenis-prevent className="absolute inset-0 overflow-y-auto overscroll-contain" onClick={onClose}>
         <motion.div
-          className="relative mx-auto min-h-full max-w-5xl bg-ink-2 shadow-2xl sm:my-10 sm:min-h-0 sm:rounded-2xl"
+          className="relative mx-auto min-h-full max-w-5xl bg-ink-2 shadow-2xl sm:my-10 sm:min-h-0 sm:rounded-2xl border border-white/10"
           onClick={(e) => e.stopPropagation()}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -91,46 +91,62 @@ export default function ProjectModal({ project, onClose, onSwitch }: { project: 
               {project.logline}
             </motion.p>
 
-            {project.github && (
-              <motion.div variants={block} className="mt-6 flex flex-wrap gap-3">
+            {/* Action buttons (Live Demo & GitHub) */}
+            <motion.div variants={block} className="mt-6 flex flex-wrap gap-3">
+              {project.live && (
+                <Magnetic>
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-cursor="link"
+                    className="flex min-h-12 items-center gap-2 rounded-md bg-white px-6 text-[15px] font-bold text-black transition hover:bg-white/90 shadow-lg"
+                  >
+                    ▶ View Live Project ↗
+                  </a>
+                </Magnetic>
+              )}
+              {project.github && (
                 <Magnetic>
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
                     data-cursor="link"
-                    className="flex min-h-12 items-center gap-2 rounded-md bg-bone px-6 text-[15px] font-bold text-ink transition hover:bg-white"
+                    className="flex min-h-12 items-center gap-2 rounded-md border border-white/20 bg-white/10 px-6 text-[15px] font-bold text-bone backdrop-blur transition hover:bg-white/20"
                   >
-                    GitHub ↗
+                    Source Code ↗
                   </a>
                 </Magnetic>
-              </motion.div>
-            )}
+              )}
+            </motion.div>
 
-            {/* impact */}
-            <motion.section variants={block} className="mt-12">
-              <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-crimson-2">Result / Impact</h3>
-              <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-white/10 sm:grid-cols-3 lg:grid-cols-5">
-                {project.metrics.map((m, i) => (
-                  <motion.div
-                    key={m.label}
-                    className="bg-ink p-4 sm:p-5"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.5 + i * 0.07, duration: 0.5, ease: EASE }}
-                  >
-                    <p className="font-display text-4xl leading-none text-bone sm:text-5xl" style={{ color: i === 0 ? project.palette.accent : undefined }}>
-                      {m.value}
-                    </p>
-                    <p className="mt-2 text-xs leading-snug text-mist">{m.label}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.section>
+            {/* Optional impact metrics */}
+            {project.metrics && project.metrics.length > 0 && (
+              <motion.section variants={block} className="mt-12">
+                <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-crimson-2">Result / Impact</h3>
+                <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-white/10 sm:grid-cols-3 lg:grid-cols-5">
+                  {project.metrics.map((m, i) => (
+                    <motion.div
+                      key={m.label}
+                      className="bg-ink p-4 sm:p-5"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5 + i * 0.07, duration: 0.5, ease: EASE }}
+                    >
+                      <p className="font-display text-4xl leading-none text-bone sm:text-5xl" style={{ color: i === 0 ? project.palette.accent : undefined }}>
+                        {m.value}
+                      </p>
+                      <p className="mt-2 text-xs leading-snug text-mist">{m.label}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.section>
+            )}
 
             <div className="mt-12 grid gap-10 lg:grid-cols-[3fr_2fr]">
               <motion.section variants={block}>
-                <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-crimson-2">My Contribution</h3>
+                <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-crimson-2">Project Architecture &amp; Implementation</h3>
                 <ul className="space-y-4">
                   {project.build.map((b) => (
                     <li key={b} className="flex gap-3 text-[15px] leading-relaxed text-bone/85">
@@ -180,7 +196,7 @@ export default function ProjectModal({ project, onClose, onSwitch }: { project: 
                     <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
                       <ProjectArt project={p} />
                     </div>
-                    <div className="absolute inset-x-0 bottom-0 p-4">
+                    <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                       <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-mist">{p.genre}</p>
                       <p className="font-display text-3xl leading-none tracking-wide text-bone">{p.title}</p>
                     </div>

@@ -15,15 +15,68 @@
   --ease-cine: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ========================
+   LIGHT / DARK THEME VARS
+   ======================== */
+
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   --gutter: clamp(16px, 4vw, 56px);
+
+  /* Light theme surfaces */
+  --bg-primary: #faf9f7;
+  --bg-secondary: #f0ede8;
+  --bg-card: #ffffff;
+  --bg-card-2: #f5f2ee;
+  --text-primary: #0e0e13;
+  --text-secondary: #3a3940;
+  --text-muted: #6d6c75;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-color-strong: rgba(0, 0, 0, 0.15);
+  --glass-bg: rgba(255, 255, 255, 0.70);
+  --glass-border: rgba(0, 0, 0, 0.10);
+  --overlay-bg: rgba(250, 249, 247, 0.85);
+  --ink-fixed: #07070a;
+  --bone-fixed: #f4f1ec;
+  --nav-bg: rgba(250, 249, 247, 0.85);
+  --nav-bg-solid: rgba(250, 249, 247, 0.95);
+  --shadow-color: rgba(0, 0, 0, 0.12);
+  --grain-opacity: 0.035;
 }
+
+html.dark {
+  color-scheme: dark;
+
+  /* Dark theme surfaces */
+  --bg-primary: #07070a;
+  --bg-secondary: #0e0e13;
+  --bg-card: #0e0e13;
+  --bg-card-2: #16161d;
+  --text-primary: #f4f1ec;
+  --text-secondary: #a7a6ad;
+  --text-muted: #6d6c75;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-strong: rgba(255, 255, 255, 0.15);
+  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --overlay-bg: rgba(7, 7, 10, 0.85);
+  --ink-fixed: #07070a;
+  --bone-fixed: #f4f1ec;
+  --nav-bg: rgba(7, 7, 10, 0.70);
+  --nav-bg-solid: rgba(7, 7, 10, 0.92);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --grain-opacity: 0.055;
+}
+
+/* ========================
+   BASE STYLES
+   ======================== */
 
 html {
   position: relative;
-  background: var(--color-ink);
+  background: var(--bg-primary);
   -webkit-text-size-adjust: 100%;
+  transition: background-color 0.35s ease;
 }
 
 html.lenis,
@@ -39,13 +92,14 @@ html.lenis body {
 
 body {
   margin: 0;
-  background: var(--color-ink);
-  color: var(--color-bone);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 ::selection {
@@ -58,13 +112,30 @@ body {
   padding-right: var(--gutter);
 }
 
-/* Film grain — a single fixed layer, cheap and subtle */
+/* ========================
+   THEME-AWARE UTILITY CLASSES
+   ======================== */
+
+/* Use these in components instead of raw Tailwind dark surface classes */
+.surface { background-color: var(--bg-primary); }
+.surface-2 { background-color: var(--bg-secondary); }
+.surface-card { background-color: var(--bg-card); }
+.surface-card-2 { background-color: var(--bg-card-2); }
+.text-theme-primary { color: var(--text-primary); }
+.text-theme-secondary { color: var(--text-secondary); }
+.text-theme-muted { color: var(--text-muted); }
+.border-theme { border-color: var(--border-color); }
+
+/* ========================
+   FILM GRAIN
+   ======================== */
+
 .grain {
   position: fixed;
   inset: -50%;
   pointer-events: none;
   z-index: 90;
-  opacity: 0.055;
+  opacity: var(--grain-opacity);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grain 1.2s steps(6) infinite;
 }
@@ -77,7 +148,10 @@ body {
   100% { transform: translate(0, 0); }
 }
 
-/* Hide scrollbars on horizontal rails while keeping them scrollable */
+/* ========================
+   SCROLLBAR HIDING FOR RAILS
+   ======================== */
+
 .rail {
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
@@ -87,7 +161,10 @@ body {
   display: none;
 }
 
-/* Custom cursor: hide the native one only when ours is active */
+/* ========================
+   CUSTOM CURSOR
+   ======================== */
+
 .has-custom-cursor,
 .has-custom-cursor a,
 .has-custom-cursor button,
@@ -95,17 +172,40 @@ body {
   cursor: none;
 }
 
+/* ========================
+   TEXT EFFECTS
+   ======================== */
+
 .text-outline {
   color: transparent;
   -webkit-text-stroke: 2px rgba(244, 241, 236, 0.28);
 }
 
+/* ========================
+   GLASS EFFECT
+   ======================== */
+
 .glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
+
+/* Light theme glass override */
+:root .glass {
+  background: rgba(255, 255, 255, 0.65);
+  border-color: rgba(0, 0, 0, 0.10);
+}
+
+html.dark .glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  border-color: rgba(255, 255, 255, 0.10);
+}
+
+/* ========================
+   FOCUS RING
+   ======================== */
 
 .focus-ring:focus-visible,
 button:focus-visible,
@@ -114,6 +214,10 @@ a:focus-visible {
   outline-offset: 3px;
   border-radius: 6px;
 }
+
+/* ========================
+   LIGHT STREAK
+   ======================== */
 
 .light-streak {
   position: absolute;
@@ -130,6 +234,10 @@ a:focus-visible {
   100% { opacity: 0; }
 }
 
+/* ========================
+   SHIMMER TEXT
+   ======================== */
+
 @keyframes shimmer {
   to { background-position: 200% center; }
 }
@@ -142,6 +250,56 @@ a:focus-visible {
   animation: shimmer 6s linear infinite;
 }
 
+/* Light mode shimmer uses dark text */
+:root .shimmer-text {
+  background: linear-gradient(90deg, #0e0e13 0%, #0e0e13 40%, #e5132b 50%, #0e0e13 60%, #0e0e13 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+html.dark .shimmer-text {
+  background: linear-gradient(90deg, #f4f1ec 0%, #f4f1ec 40%, #ff8a9a 50%, #f4f1ec 60%, #f4f1ec 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ========================
+   THEME TRANSITION
+   ======================== */
+
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Exclude transitions from animations to avoid conflicts */
+.grain, .light-streak {
+  transition: none;
+}
+
+/* ========================
+   LIGHT MODE SECTION OVERRIDES
+   ======================== */
+
+/* Section backgrounds in light mode */
+:root section {
+  background: var(--bg-primary);
+}
+
+/* Light mode card rings */
+:root .ring-1 {
+  --tw-ring-color: var(--border-color);
+}
+
+/* ========================
+   REDUCED MOTION
+   ======================== */
+
 @media (prefers-reduced-motion: reduce) {
   .grain,
   .light-streak,
@@ -150,5 +308,9 @@ a:focus-visible {
   }
   .light-streak {
     display: none;
+  }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }

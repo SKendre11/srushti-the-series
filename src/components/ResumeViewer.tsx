@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { achievements, certifications, education, experience, profile, projects, skillCategories } from '../data/portfolio';
+import { coursework, education, experience, profile, projects, skillCategories } from '../data/portfolio';
 import { EASE, Magnetic, SectionHeading } from './fx';
 
 /** THE FULL STORY — a designed resume preview plus view / download actions. */
 export default function ResumeSection({ onView }: { onView: () => void }) {
   return (
     <>
-      <SectionHeading kicker="The screenplay" title="The Full Story" />
+      <SectionHeading kicker="Official Curriculum Vitae" title="The Full Story" />
       <div className="gutter grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14">
         <motion.div
-          initial={{ opacity: 0, y: 60, rotateX: 10 }}
+          initial={{ opacity: 0, y: 50, rotateX: 8 }}
           whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
           viewport={{ once: true, margin: '-10% 0px' }}
           transition={{ duration: 1.1, ease: EASE }}
@@ -20,9 +20,11 @@ export default function ResumeSection({ onView }: { onView: () => void }) {
         </motion.div>
 
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <p className="font-serif text-3xl italic leading-tight text-bone">Every episode, on one page.</p>
-          <p className="mt-3 text-sm leading-relaxed text-mist">
-            Education, training, projects, achievements and {certifications.length} certifications — view it here or take a copy with you.
+          <p className="font-serif text-3xl italic leading-tight" style={{ color: 'var(--text-primary)' }}>
+            Every episode, documented in detail.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            Education, coursework, web development internship experience, and full-stack projects.
           </p>
           <div className="mt-6 flex flex-col gap-3">
             <Magnetic className="w-full">
@@ -30,31 +32,33 @@ export default function ResumeSection({ onView }: { onView: () => void }) {
                 type="button"
                 data-cursor="view"
                 onClick={onView}
-                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-bone px-6 text-[15px] font-bold text-ink transition hover:bg-white"
+                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-md px-6 text-[15px] font-bold transition hover:opacity-90 shadow-md"
+                style={{ background: 'var(--text-primary)', color: 'var(--bg-primary)' }}
               >
-                ▶ View Resume
+                ▶ View Full PDF Resume
               </button>
             </Magnetic>
             <Magnetic className="w-full">
               <a
                 href={profile.resumePdf}
-                download="Sushmita_Dasari_Resume.pdf"
+                download="Srushti_Kendre_Resume.pdf"
                 data-cursor="link"
-                className="glass flex min-h-12 w-full items-center justify-center gap-2 rounded-md px-6 text-[15px] font-semibold text-bone transition hover:bg-white/15"
+                className="glass flex min-h-12 w-full items-center justify-center gap-2 rounded-md px-6 text-[15px] font-semibold transition"
+                style={{ color: 'var(--text-primary)' }}
               >
-                ⤓ Download Resume
+                ⤓ Download Resume (PDF)
               </a>
             </Magnetic>
           </div>
-          <dl className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-xl bg-white/10 text-center">
+          <dl className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-xl text-center border" style={{ borderColor: 'var(--border-color)', background: 'var(--border-color)' }}>
             {[
-              { v: education[0].score.replace('CGPA ', ''), k: 'CGPA' },
-              { v: String(projects.length), k: 'Originals' },
-              { v: String(certifications.length), k: 'Certs' },
+              { v: String(education.length), k: 'Education' },
+              { v: String(projects.length), k: 'Projects' },
+              { v: String(skillCategories.length), k: 'Skill Areas' },
             ].map((s) => (
-              <div key={s.k} className="bg-ink-2 px-2 py-4">
-                <dd className="font-display text-3xl leading-none text-bone">{s.v}</dd>
-                <dt className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-smoke">{s.k}</dt>
+              <div key={s.k} className="px-2 py-4" style={{ background: 'var(--bg-card)' }}>
+                <dd className="font-display text-3xl leading-none" style={{ color: 'var(--text-primary)' }}>{s.v}</dd>
+                <dt className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: 'var(--text-muted)' }}>{s.k}</dt>
               </div>
             ))}
           </dl>
@@ -73,8 +77,11 @@ function CollapsibleSheet() {
         <ResumeSheet />
       </div>
       {!open && (
-        <div className="absolute inset-x-0 bottom-0 flex h-48 items-end justify-center rounded-b-2xl bg-gradient-to-t from-ink via-ink/85 to-transparent pb-4 md:hidden">
-          <button type="button" onClick={() => setOpen(true)} className="glass min-h-11 rounded-full px-5 text-sm font-semibold text-bone">
+        <div
+          className="absolute inset-x-0 bottom-0 flex h-48 items-end justify-center rounded-b-2xl pb-4 md:hidden"
+          style={{ background: 'linear-gradient(to top, var(--bg-primary) 0%, var(--bg-primary) 40%, transparent 100%)' }}
+        >
+          <button type="button" onClick={() => setOpen(true)} className="glass min-h-11 rounded-full px-5 text-sm font-semibold shadow-lg" style={{ color: 'var(--text-primary)' }}>
             Read the full story ↓
           </button>
         </div>
@@ -84,61 +91,85 @@ function CollapsibleSheet() {
 }
 
 function H({ children }: { children: string }) {
-  return <h4 className="mb-3 mt-7 border-b border-white/10 pb-1.5 text-[10px] font-bold uppercase tracking-[0.3em] text-crimson-2 first:mt-0">{children}</h4>;
+  return (
+    <h4
+      className="mb-3 mt-7 pb-1.5 text-[10px] font-bold uppercase tracking-[0.3em] text-crimson-2 first:mt-0"
+      style={{ borderBottom: '1px solid var(--border-color)' }}
+    >
+      {children}
+    </h4>
+  );
 }
 
 export function ResumeSheet() {
   return (
-    <article className="relative overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#121218,#0c0c11)] p-6 ring-1 ring-white/10 sm:p-10">
+    <article
+      className="relative overflow-hidden rounded-2xl p-6 sm:p-10 border shadow-lg"
+      style={{
+        background: 'var(--bg-card)',
+        borderColor: 'var(--border-color)',
+      }}
+    >
       <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-crimson-2/70 to-transparent" />
-      <header className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-6">
+      <header className="mb-8 flex flex-wrap items-end justify-between gap-4 pb-6" style={{ borderBottom: '1px solid var(--border-color)' }}>
         <div>
-          <p className="text-[10px] font-bold tracking-[0.34em] text-smoke">STARRING</p>
-          <h3 className="mt-1 font-display text-[clamp(1.9rem,4.4vw,3.2rem)] leading-[0.9] tracking-wide text-bone">{profile.fullName}</h3>
+          <p className="text-[10px] font-bold tracking-[0.34em]" style={{ color: 'var(--text-muted)' }}>STARRING</p>
+          <h3 className="mt-1 font-display text-[clamp(2.2rem,4.4vw,3.4rem)] leading-[0.9] tracking-wide" style={{ color: 'var(--text-primary)' }}>
+            {profile.fullName}
+          </h3>
+          <p className="mt-1 text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
+            {profile.headline}
+          </p>
         </div>
-        <div className="text-xs leading-relaxed text-mist sm:text-right">
-          <a href={`mailto:${profile.email}`} className="block hover:text-bone">
+        <div className="text-xs leading-relaxed sm:text-right" style={{ color: 'var(--text-secondary)' }}>
+          <a href={`mailto:${profile.email}`} className="block hover:text-crimson-2 transition">
             {profile.email}
           </a>
-          <a href={profile.links.linkedin} target="_blank" rel="noreferrer" className="hover:text-bone">
-            LinkedIn ↗
+          <a href={`tel:${profile.phone}`} className="block hover:text-crimson-2 transition">
+            {profile.phone}
           </a>
-          {' · '}
-          <a href={profile.links.github} target="_blank" rel="noreferrer" className="hover:text-bone">
-            GitHub ↗
-          </a>
+          <div className="mt-1 space-x-2">
+            <a href={profile.links.linkedin} target="_blank" rel="noreferrer" className="hover:text-crimson-2 transition">
+              LinkedIn ↗
+            </a>
+            <span>·</span>
+            <a href={profile.links.github} target="_blank" rel="noreferrer" className="hover:text-crimson-2 transition">
+              GitHub ↗
+            </a>
+          </div>
         </div>
       </header>
 
-      <div className="grid gap-x-10 md:grid-cols-[1.4fr_1fr]">
+      <div className="grid gap-x-10 md:grid-cols-[1.3fr_1fr]">
         <div>
           <H>Education</H>
           {education.map((e) => (
             <div key={e.school} className="mb-4">
               <div className="flex flex-wrap justify-between gap-x-3">
-                <p className="text-sm font-semibold text-bone">
-                  {e.school}, {e.place}
+                <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  {e.school}
                 </p>
-                <p className="text-xs text-smoke">{e.period}</p>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{e.period}</p>
               </div>
-              <p className="text-xs text-mist">
-                {e.degree} · <span className="text-bone/80">{e.score}</span>
+              <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{e.place}</p>
+              <p className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
+                {e.degree}
               </p>
             </div>
           ))}
 
-          <H>Work Experience</H>
+          <H>Experience / Internship</H>
           {experience.map((x) => (
-            <div key={x.company}>
+            <div key={x.company} className="mb-4">
               <div className="flex flex-wrap justify-between gap-x-3">
-                <p className="text-sm font-semibold text-bone">
+                <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
                   {x.company} — {x.role}
                 </p>
-                <p className="text-xs text-smoke">{x.period}</p>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{x.period}</p>
               </div>
               <ul className="mt-2 space-y-1.5">
                 {x.points.map((p) => (
-                  <li key={p} className="flex gap-2 text-xs leading-relaxed text-mist">
+                  <li key={p} className="flex gap-2 text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-crimson-2" />
                     {p}
                   </li>
@@ -147,47 +178,47 @@ export function ResumeSheet() {
             </div>
           ))}
 
-          <H>Projects</H>
+          <H>Key Projects</H>
           {projects.map((p) => (
             <div key={p.id} className="mb-3">
               <div className="flex flex-wrap justify-between gap-x-3">
-                <p className="text-sm font-semibold text-bone">{p.title}</p>
-                <p className="text-xs text-smoke">{p.year}</p>
+                <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{p.year}</p>
               </div>
-              <p className="text-xs text-mist">{p.stack.join(', ')}</p>
+              <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{p.stack.join(', ')}</p>
             </div>
           ))}
         </div>
 
         <div>
-          <H>Skills</H>
+          <H>Technical Skills</H>
           <div className="space-y-2">
             {skillCategories.map((c) => (
-              <p key={c.id} className="text-xs leading-relaxed text-mist">
-                <span className="font-semibold text-bone">{c.title}: </span>
+              <p key={c.id} className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{c.title}: </span>
                 {c.skills.map((s) => s.name).join(', ')}
               </p>
             ))}
           </div>
 
-          <H>Achievements</H>
-          <ul className="space-y-2">
-            {achievements.map((a) => (
-              <li key={a.id} className="text-xs leading-relaxed text-mist">
-                <span className="font-semibold text-bone">
-                  {a.title} — {a.org}.
-                </span>{' '}
-                {a.detail}
+          <H>Relevant Coursework</H>
+          <ul className="space-y-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
+            {coursework.map((course) => (
+              <li key={course} className="flex items-center gap-2">
+                <span className="h-1 w-1 rounded-full bg-crimson-2" />
+                {course}
               </li>
             ))}
           </ul>
 
-          <H>Certifications</H>
-          <p className="text-xs leading-relaxed text-mist">
-            {Array.from(new Set(certifications.map((c) => c.issuer)))
-              .map((iss) => `${iss}: ${certifications.filter((c) => c.issuer === iss).map((c) => c.name).join(', ')}`)
-              .join(' · ')}
-          </p>
+          <H>Location &amp; Contact</H>
+          <div className="space-y-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
+            <p>{profile.location}</p>
+            <p><a href={`mailto:${profile.email}`} className="hover:text-crimson-2 transition">{profile.email}</a></p>
+            <p><a href={`tel:${profile.phone}`} className="hover:text-crimson-2 transition">{profile.phone}</a></p>
+            <p><a href={profile.links.linkedin} target="_blank" rel="noreferrer" className="hover:text-crimson-2 transition">linkedin.com/in/srushti-kendre ↗</a></p>
+            <p><a href={profile.links.github} target="_blank" rel="noreferrer" className="hover:text-crimson-2 transition">github.com/SKendre11 ↗</a></p>
+          </div>
         </div>
       </div>
     </article>
